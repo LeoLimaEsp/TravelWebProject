@@ -1,0 +1,66 @@
+﻿@model TravelWeb.Models.VentaModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<body class="img">
+</body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://img.freepik.com/vector-premium/fondo-blanco-raya-moderna_105940-1319.jpg);
+        background-size: cover;
+    }
+</style>
+
+<h1><i class="fa-solid fa-circle-info"></i> Detalles de la venta: </h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Venta_ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Venta_ID)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cliente_nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cliente_nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Viaje_nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Viaje_nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Monto_venta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Monto_venta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fecha_venta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fecha_venta)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-secondary btn-sm link-secondary link-offset-2 link-underline-opacity-0 " asp-action="Index">Regresar a la lista de ventas</a>
+</div>

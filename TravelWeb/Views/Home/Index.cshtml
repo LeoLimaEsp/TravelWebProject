@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<body class="img"></body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://www.processmaker.com/wp-content/uploads/2020/09/customer-onboarding.jpg);
+        background-size: cover;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido a nuestro sitio de viajes en linea</h1>
+    <p>Elije una opción</p>
+</div>
+
+    <p class="pt-5 text-center" >
+    <a class="btn font-weight-normal text-white hover-effect" style="background-color:#1BC6E4;" asp-action="Create" asp-controller="Cliente" > Registrar nuevo cliente</a >
+    <a class="btn font-weight-normal text-white hover-effect" style="background-color:#0B3998;" asp-action="Create" asp-controller="Viaje"> Dar de alta viaje</a>
+    <a class="btn font-weight-normal text-white hover-effect" style="background-color:#1BC6E4;" asp-action="Create" asp-controller="Venta">Comprar viaje</a>
+    <a class="btn font-weight-normal text-white hover-effect" style="background-color:#0B3998;" asp-action="Create" asp-controller="Catalogo"> Añadir nueva ciudad</a>
+</p>

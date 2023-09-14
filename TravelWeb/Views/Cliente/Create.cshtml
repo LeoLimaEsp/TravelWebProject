@@ -1,0 +1,127 @@
+﻿@model TravelWeb.Models.ClienteModel
+@{
+    ViewData["Title"] = "Create";
+}
+<body class="img">
+</body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://img.freepik.com/foto-gratis/fondo-producto-minimo-gris_53876-147756.jpg);
+        background-size: cover;
+    }
+</style>
+
+<h4>Nuevo cliente <i class="fa-solid fa-person-circle-plus"></i></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>Estado:</label>
+                <select asp-for="Estado_ID" id="Estado_ID" class="form-control">
+                    <option value="0">Selecciona tu estado:</option>
+                </select>
+                <span asp-validation-for="Estado_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Municipio:</label>
+                <select asp-for="Municipio_ID" id="Municipio_ID" class="form-control">
+                    <option value="0">Selecciona tu municipio:</option>
+                </select>
+                <span asp-validation-for="Municipio_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Edad" class="control-label"></label>
+                <input asp-for="Edad" class="form-control" />
+                <span asp-validation-for="Edad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" value="Crear" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mt-3">
+    <a class=" btn btn-outline-secondary btn-sm link-secondary link-offset-2 link-underline-opacity-0" asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+            // Este bloque se ejecuta automaticamente, al entrar en la página.
+            $(document).ready(function () {
+                onLoadEstados();
+            });
+
+            //Cargado de estados:
+            function onLoadEstados(){
+                /* Invocación AJAX para CONSUMIR el servicio de Estados */
+                $.ajax({
+                    url: "/api/Estados",
+                    type: "GET",
+                    cache: false,
+                    success: function (estados) {
+                        console.log("servidor responde OK");
+                        // Programar: instrucciones a realizar, cuando el servicio responda
+                        for (var i = 0; i < estados.length; i++) {
+                            var item = estados[i];
+                            $("#Estado_ID").append('<option value="' + item.id_estado + '">' + item.nombre + '</option>');
+                        }
+                    },
+                    error: function (request, errorType, errorMsg) {
+                        console.log("Error al recuperar información:" + errorMsg);
+                    }
+                });
+            }
+
+            // EVENTO: Tomas el elemento (lista) Estados y le agregas a un evento:
+            $("#Estado_ID").change(function () {
+                $("#Municipio_ID").empty().append('<option selected disabled>Seleccione tu municipio:</option>');
+                var Estado = parseInt($("#Estado_ID").val());
+                onLoadMunicipios(Estado);
+            });
+
+            //Cargado de municipios dependiendo del estado a seleccionar:
+            function onLoadMunicipios(Estado){          
+                $.ajax({
+                    url: "/api/Municipio/"+Estado,
+                    type: "GET",
+                    cache: false,
+                    success: function (municipios) {                      
+                        for (var i = 0; i < municipios.length; i++) {
+                            var item = municipios[i];
+                            $("#Municipio_ID").append('<option value="' + item.id_municipio + '">' + item.nombre + '</option>');
+                        }
+                    },
+                    error: function (request, errorType, errorMsg) {
+                        console.log("Error al recuperar información:" + errorMsg);
+                    }
+                });
+            }
+        </script>
+}

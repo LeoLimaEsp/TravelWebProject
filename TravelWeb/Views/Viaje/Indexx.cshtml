@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TravelWeb.Models.ViajeModel>
+
+@{
+    ViewData["Title"] = "IndexForDate";
+}
+
+<body class="img">
+</body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://img.freepik.com/vector-premium/fondo-vector-monocromo-blanco-abstracto-folleto-diseno-folleto-sitio-web-fondo-pantalla-blanco-geometrico-pagina-inicio-presentacion-certificado_249611-6006.jpg);
+        background-size: cover;
+    }
+</style>
+
+<body class="img">
+</body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://img.freepik.com/vector-gratis/fondo-monocromatico-blanco-estilo-papel_52683-66444.jpg);
+    }
+</style>
+
+<H2>
+    <i class="fa-solid fa-calendar-days"></i> Reporte de viajes comprados por periodo de tiempo:
+</H2>
+ <p>Por favor seleccione fecha inicial y final para la busqueda de viajes</p>
+
+<input class="btn btn-outline-secondary" id="boton" type="button" value="Buscar viajes" />
+<input  id="ini" type="date"/>
+<input  id="fin" type="date" />
+
+
+<table class="table" >
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                Precio $:
+            </th>
+        </tr>
+    </thead>
+    <tbody id="DataResult">
+
+    </tbody>
+</table>
+<span id="sinResultados"></span>
+<h6>Monto total de viajes encontrados en la busqueda:  </h6>
+<span>$</span><span id="result"></span><span>.00 MXN</span>
+
+@section Scripts 
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function(){
+            $("#alerta").hide();
+        });
+       
+        $("#boton").click(function(){
+
+            //Mensaje de confirmación entrada botón
+            console.log("Botón funciona ok");
+
+            //Variables:
+            var params = {
+                ini: $("#ini").val(),
+                fin: $("#fin").val()
+            }
+
+            var alertaa="No se encontraron resultados.";
+            var alertaaa="";
+
+            //Inicia consumo de ajax:
+            $.ajax({
+                url: "/Viaje/GetList",
+                type: "GET",
+                data: params,
+                cache: false,
+                success: function(viajesRecuperados){
+                    console.log("Consumo exitoso")
+                    var html = '';
+                    var montoTotal = 0;
+                    for (var i = 0; i < viajesRecuperados.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + viajesRecuperados[i].nombre + '</td>' +
+                            '<td>' + viajesRecuperados[i].descripcion + '</td>' +
+                            '<td>' + viajesRecuperados[i].precio + '</td>' +
+                            '</tr>';
+                        montoTotal = montoTotal + parseInt(viajesRecuperados[i].precio);
+                    }
+                    
+        
+                    $("#result").html(montoTotal);
+                    $("#DataResult").html(html);
+
+                    if (montoTotal == 0) {
+                        $("#sinResultados").html(alertaa);
+                    }else{
+                        $("#sinResultados").html(alertaaa);
+                    }
+                },
+                error: function (request, errorType, errorMsg){
+                    console.log("Error al recuperar información:" + errorMsg);
+                }
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<TravelWeb.Models.VentaModel>
+
+@{
+    ViewData["Title"] = "DetailsVenta";
+}
+<body class="img">
+</body>
+<style>
+    .hover-effect:hover {
+        opacity: 0.6;
+    }
+
+    .img {
+        background-image: url(https://img.freepik.com/vector-gratis/fondo-monocromatico-blanco-estilo-papel_23-2149001605.jpg?w=2000);
+        background-size: cover;
+    }
+</style>
+
+
+                <h1>¡Gracias por viajar con nosotros! 🙋🏻‍♂️</h1>
+
+@{
+    string statusMensaje = ViewData["mensaje"].ToString();
+}
+
+@if (statusMensaje.Contains("confirmada"))
+{
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                    </symbol>
+                </svg>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+
+        @ViewData["mensaje"]
+
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+}
+<p>
+    <a class="btn btn-outline-secondary btn-sm link-secondary link-offset-2 link-underline-opacity-0 " href="/Home/Index">Salir</a>
+</p>
+
+<p>
+    <a class="btn btn-outline-secondary btn-sm link-secondary link-offset-2 link-underline-opacity-0 " href="/Venta/Create">Comprar otro viaje</a>
+</p>
+
+
+<table class="table">
+    <h2>Historial de viajes comprados por el usuario:</h2>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente_nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Viaje_nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monto_venta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_venta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Viaje_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto_venta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_venta)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

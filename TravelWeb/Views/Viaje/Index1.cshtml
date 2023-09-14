@@ -1,0 +1,117 @@
+﻿@model IEnumerable<TravelWeb.Models.ViajeModel>
+
+@{
+    ViewData["Title"] = "IndexForDate";
+}
+
+<p>
+    Reporte de viajes comprados por periodo de tiempo
+</p>
+
+<input id="ini" type="date" placeholder="Seleccione fecha inicio de busqueda" />
+<input id="fin" type="date" value="Seleccione fecha limite de busqueda" />
+<button id="botonBusqueda">Buscar viajes</button>
+
+<table class="table" id="tableViajes">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Viaje_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ciudad_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_inicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_fin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        var fechaIni = $("#ini").val();
+        var fechaFin = $("#fin").val();
+        var boton = $("#botonBusqueda");
+        boton.onclick = function onLoadViajes(fechaIni, fechaFin) {
+            /* Invocación AJAX para CONSUMIR el servicio de Viajes */
+            $.ajax({
+                url: "Viaje/GetList?ini=" + fechaIni "&fin=" + fechaFin,
+                type: "GET",
+                cache: false,
+                success: function (viajes) {
+                    console.log("servidor responde OK");
+                    // Programar: instrucciones a realizar, cuando el servicio responda
+                    for (var i = 0; i < viajes.length; i++) {
+                        var item = viajes[i];
+                        $("#tableViajes").append(<tr>
+                            <td>
+
+                            </td>
+                            < td >
+
+                            </td>
+                            < td >
+
+                            </td>
+                            < td >
+
+                            </td>
+                            < td >
+
+                            </td>
+                            < td >
+
+                            </td>
+                            < /tr>);
+                    }
+                },
+                error: function (request, errorType, errorMsg) {
+                    console.log("Error al recuperar información:" + errorMsg);
+                }
+            });
+        }
+
+
+    </script>
+}
